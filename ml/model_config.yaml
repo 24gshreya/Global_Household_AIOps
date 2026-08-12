@@ -1,0 +1,34 @@
+model:
+  name: global-household-financial-health
+  algorithm: xgboost
+
+data:
+  target: health_category
+  test_size: 0.20
+  random_state: 42
+
+features:
+  categorical:
+    - Country
+    - City
+
+  numerical:
+    - Family_Size
+    - Num_Earners
+    - Primary_Income
+    - Total_Household_Income
+    - Estimated_Taxes
+    - Monthly_Expenses
+
+training:
+  n_estimators: 200
+  max_depth: 4
+  learning_rate: 0.1
+  random_state: 42
+
+cross_validation:
+  folds: 5
+
+quality_gate:
+  minimum_accuracy: 0.93
+  minimum_f1_macro: 0.93

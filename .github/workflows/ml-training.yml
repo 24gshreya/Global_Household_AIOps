@@ -1,0 +1,105 @@
+name: ML Training Pipeline
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "src/data/**"
+      - "src/features/**"
+      - "src/models/**"
+      - "src/evaluation/**"
+      - "src/registry/**"
+      - "ml/**"
+      - "data/raw/**"
+      - "tests/**"
+      - "requirements.txt"
+      - ".github/workflows/ml-training.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "src/data/**"
+      - "src/features/**"
+      - "src/models/**"
+      - "src/evaluation/**"
+      - "src/registry/**"
+      - "ml/**"
+      - "tests/**"
+      - "requirements.txt"
+
+permissions:
+  contents: read
+
+jobs:
+  train-and-evaluate:
+    runs-on: ubuntu-latest
+
+    env:
+      DATASET_PATH: data/raw/Global_Household_Financial_Dynamics.csv
+      MLFLOW_TRACKING_URI: http://127.0.0.1:5000
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: pytest tests/unit -v
+
+      - name: Validate training dataset
+        run: |
+          python -c "
+          from src.data.ingestion import load_data
+          from src.data.validation import validate_data
+
+          df = load_data('data/raw/Global_Household_Financial_Dynamics.csv')
+          validate_data(df)
+
+          print('Dataset validation PASSED')
+          print(f'Rows: {len(df)}')
+          print(f'Columns: {len(df.columns)}')
+          "
+
+      - name: Start MLflow server
+        run: |
+          nohup mlflow server \
+            --host 127.0.0.1 \
+            --port 5000 \
+            --backend-store-uri sqlite:///mlflow.db \
+            > mlflow-server.log 2>&1 &
+
+          sleep 10
+
+      - name: Check MLflow server
+        run: |
+          curl --fail http://127.0.0.1:5000/health
+
+      - name: Train and evaluate model
+        run: python -m src.models.train
+
+      - name: Run ML pipeline tests
+        run: pytest tests/integration -v
+
+      - name: Upload MLflow logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlflow-training-logs
+          path: |
+            mlflow-server.log
+          retention-days: 7
