@@ -39,8 +39,6 @@ from src.evaluation.quality_gate import evaluate_quality_gate
 from src.registry.mlflow_registry import promote_to_champion
 
 
-
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 CONFIG_PATH = PROJECT_ROOT / "ml" / "model_config.yaml"
@@ -113,7 +111,10 @@ def train() -> None:
 
     X = df[MODEL_FEATURES].copy()
 
-    integer_features = ["Family_Size", "Num_Earners",]
+    integer_features = [
+        "Family_Size",
+        "Num_Earners",
+    ]
     X[integer_features] = X[integer_features].astype("float64")
 
     y = df["health_category"].astype(str)
@@ -320,7 +321,7 @@ def train() -> None:
 
         for name, value in metrics.items():
             print(f"{name}: {value:.4f}")
-        
+
         print(
             "Classes:",
             list(label_encoder.classes_),
@@ -331,9 +332,8 @@ def train() -> None:
             print(f"Champion version: {current_model_version}")
         else:
             print("Quality gate: FAILED")
-            raise RuntimeError(
-                "Candidate model failed production quality gate."
-            )
+            raise RuntimeError("Candidate model failed production quality gate.")
+
 
 if __name__ == "__main__":
     train()
