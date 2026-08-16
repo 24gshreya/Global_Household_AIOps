@@ -1,0 +1,4 @@
+-r requirements.txt
+
+# Windows-only Foundry Local dependency
+foundry-local-sdk-winml==1.2.4
