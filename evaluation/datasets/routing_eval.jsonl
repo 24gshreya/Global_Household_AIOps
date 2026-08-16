@@ -1,0 +1,5 @@
+{"query":"Good morning","expected_route":"slm"}
+{"query":"Thank you","expected_route":"slm"}
+{"query":"What did SHAP reveal?","expected_route":"rag"}
+{"query":"What is the average household income in India?","expected_route":"data"}
+{"query":"How many households are in the UK?","expected_route":"data"}

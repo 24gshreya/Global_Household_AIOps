@@ -1,0 +1,43 @@
+name: GenAI Evaluation
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "src/genai/**"
+      - "src/rag/**"
+      - "src/evaluation/**"
+      - "prompts/**"
+      - "knowledge/**"
+      - "evaluation/datasets/**"
+      - "tests/genai/**"
+      - ".github/workflows/genai-evaluation.yml"
+
+jobs:
+  evaluate-genai:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run routing tests
+        run: pytest tests/unit/test_router.py -v
+
+      - name: Run RAG tests
+        run: pytest tests/unit/test_rag.py -v
+
+      - name: Run GenAI regression tests
+        run: pytest tests/genai -v

@@ -26,3 +26,42 @@ def evaluate_quality_gate(
     passed = len(failures) == 0
 
     return passed, failures
+
+
+def evaluate_genai_quality_gate(
+    metrics: dict[str, float],
+    minimum_routing_accuracy: float = 0.95,
+    minimum_source_recall: float = 0.90,
+    minimum_keyword_recall: float = 0.85,
+) -> tuple[bool, list[str]]:
+
+    failures = []
+
+    if (
+        metrics["routing_accuracy"]
+        < minimum_routing_accuracy
+    ):
+        failures.append(
+            "Routing accuracy below threshold."
+        )
+
+    if (
+        metrics["retrieval_source_recall"]
+        < minimum_source_recall
+    ):
+        failures.append(
+            "RAG source recall below threshold."
+        )
+
+    if (
+        metrics["retrieval_keyword_recall"]
+        < minimum_keyword_recall
+    ):
+        failures.append(
+            "RAG keyword recall below threshold."
+        )
+
+    return (
+        len(failures) == 0,
+        failures,
+    )

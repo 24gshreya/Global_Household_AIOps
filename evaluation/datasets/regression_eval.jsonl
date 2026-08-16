@@ -1,0 +1,4 @@
+{"question":"Which statistical test showed savings differ across countries?","expected_route":"rag","required_terms":["ANOVA"]}
+{"question":"What did SHAP reveal about poor financial health?","expected_route":"rag","required_terms":["savings","expense"]}
+{"question":"Good morning","expected_route":"slm"}
+{"question":"What is the average household income in India?","expected_route":"data"}

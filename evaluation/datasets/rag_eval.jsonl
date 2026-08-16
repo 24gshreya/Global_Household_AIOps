@@ -1,0 +1,4 @@
+{"id":"rag_001","question":"Which statistical test showed savings differ across countries?","expected_route":"rag","expected_keywords":["ANOVA","savings rates","countries"],"expected_source":"statistical_findings.md"}
+{"id":"rag_002","question":"What did SHAP reveal about poor financial health?","expected_route":"rag","expected_keywords":["low monthly savings","expense ratio","Poor"],"expected_source":"financial_health_findings.md"}
+{"id":"rag_003","question":"Describe financially distressed cluster 3","expected_route":"rag","expected_keywords":["financially distressed","low savings rate","high expense ratio"],"expected_source":"cluster_findings.md"}
+{"id":"rag_004","question":"What does expense ratio mean?","expected_route":"rag","expected_keywords":["expenses","income"],"expected_source":"business_definitions.md"}
