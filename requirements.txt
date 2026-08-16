@@ -32,7 +32,4 @@ opentelemetry-sdk
 
 ruff
 
-foundry-local-sdk-winml
-openai
-
 google-genai
