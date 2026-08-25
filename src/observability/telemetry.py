@@ -1,8 +1,5 @@
 import os
 
-from azure.monitor.opentelemetry import (
-    configure_azure_monitor,
-)
 from dotenv import load_dotenv
 from opentelemetry import trace
 
@@ -13,8 +10,6 @@ _configured = False
 
 
 def configure_telemetry() -> None:
-    """Configure Azure Monitor OpenTelemetry once."""
-
     global _configured
 
     if _configured:
@@ -25,12 +20,11 @@ def configure_telemetry() -> None:
     )
 
     if not connection_string:
-        print(
-            "Application Insights connection "
-            "string not configured. "
-            "Telemetry disabled."
-        )
         return
+
+    from azure.monitor.opentelemetry import (
+        configure_azure_monitor,
+    )
 
     configure_azure_monitor(
         connection_string=connection_string,
