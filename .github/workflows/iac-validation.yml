@@ -1,0 +1,26 @@
+name: IaC Validation
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "infra/**"
+      - ".github/workflows/iac-validation.yml"
+
+jobs:
+  validate-bicep:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Build Bicep
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az bicep install
+            az bicep build --file infra/main.bicep

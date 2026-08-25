@@ -1,0 +1,26 @@
+{
+  "input_data": {
+    "columns": [
+      "Country",
+      "City",
+      "Family_Size",
+      "Num_Earners",
+      "Primary_Income",
+      "Total_Household_Income",
+      "Estimated_Taxes",
+      "Monthly_Expenses"
+    ],
+    "data": [
+      [
+        "UK",
+        "Leeds",
+        3.0,
+        2.0,
+        3500.0,
+        5200.0,
+        900.0,
+        3200.0
+      ]
+    ]
+  }
+}

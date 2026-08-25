@@ -27,6 +27,8 @@ sentence-transformers
 openai
 
 structlog
+
+azure-monitor-opentelemetry
 opentelemetry-api
 opentelemetry-sdk
 

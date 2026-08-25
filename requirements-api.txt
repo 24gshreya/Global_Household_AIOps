@@ -12,3 +12,5 @@ google-genai
 faiss-cpu
 sentence-transformers
 pyyaml
+
+azure-monitor-opentelemetry

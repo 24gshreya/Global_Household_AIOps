@@ -1,3 +1,9 @@
+from src.observability.telemetry import (
+    configure_telemetry,
+)
+
+configure_telemetry()
+
 from fastapi import FastAPI
 
 from src.api.routes import router
