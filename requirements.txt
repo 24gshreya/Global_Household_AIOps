@@ -28,9 +28,7 @@ openai
 
 structlog
 
-azure-monitor-opentelemetry
-opentelemetry-api
-opentelemetry-sdk
+azure-monitor-opentelemetry==1.8.9
 
 ruff
 
